@@ -23,15 +23,17 @@ if(-not $browser){ Write-Error "Chrome/Edge não encontrado. Instale o Chrome ou
 
 if(-not (Test-Path $outDir)){ New-Item -ItemType Directory -Path $outDir | Out-Null }
 
-$indexPath = (Resolve-Path .\index.html).Path
-$indexFileUri = "file:///$indexPath" -replace '\\','/'
+$outDirAbs = (Resolve-Path $outDir).Path
+$indexPath = (Resolve-Path .\\index.html).Path
+$indexFileUri = "file:///$indexPath" -replace '\\\\','/'
 
 foreach($t in $tabs){
   $safe = $t -replace '[^a-zA-Z0-9_-]','_'
-  $out = Join-Path $outDir "HydroColor_$safe.pdf"
+  $outAbs = Join-Path $outDirAbs "HydroColor_$safe.pdf"
+  # Chrome/Edge headless prefers absolute paths for --print-to-pdf
   $url = "$indexFileUri?tab=$t"
-  Write-Host "Printing tab='$t' -> $out"
-  & $browser --headless --disable-gpu --print-to-pdf="$out" "$url"
+  Write-Host "Printing tab='$t' -> $outAbs"
+  & $browser --headless --disable-gpu --print-to-pdf="$outAbs" "$url"
   Start-Sleep -Milliseconds 600
 }
 

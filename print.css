@@ -1,0 +1,30 @@
+/* Print stylesheet for HydroColor presentation */
+
+/* Hide interactive UI elements */
+header, .tabs, .logo, #themeToggle, .btn, .modal, .card > h3, footer { display: none !important; }
+
+/* Ensure content area uses full width */
+.wrap { width: 100% !important; max-width: 100% !important; margin: 0; padding: 10mm !important; background: #fff !important; color: #000 !important; }
+.content { background: transparent !important; box-shadow: none !important; padding: 0 !important; }
+
+/* Show only the active panel (script opens the desired tab) */
+.panel{ display: block !important; }
+
+/* Images: scale to printable width and keep aspect ratio */
+img{ max-width: 100% !important; height: auto !important; page-break-inside: avoid; }
+
+/* Page breaks between top-level sections */
+h2{ page-break-before: avoid; page-break-after: avoid; }
+.section-break{ page-break-after: always; }
+
+/* Fonts and sizes suitable for print */
+body{ color: #000 !important; background: #fff !important; }
+h1{ color: #000 !important; font-size: 20pt; }
+h2{ color: #000 !important; font-size: 14pt; }
+p, li{ color: #000 !important; font-size: 11pt; line-height:1.4 }
+
+/* Remove links decorations */
+a[href]:after{ content: ""; }
+
+/* Avoid printing modal overlays */
+.modal{ display:none !important; }

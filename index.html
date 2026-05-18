@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <link rel="stylesheet" href="./print.css" media="print">
   <style>
     :root{--bg:#003f63;--card:#071827;--muted:#9aa6b2;--accent:#ff7a59;--glass: rgba(255,255,255,0.04)}
     :root.light{--bg:#f7fafc;--card:#ffffff;--muted:#0b1723;--accent:#0b76ff;--glass: rgba(2,6,23,0.03)}
@@ -52,6 +53,12 @@
     .acq-item{background:var(--glass);padding:12px;border-radius:10px;text-align:center}
     .acq-item h4{margin:8px 0 6px 0;color:var(--accent)}
     @media (max-width:700px){.acq-grid{grid-template-columns:1fr}.tabs{flex-wrap:wrap;gap:6px}.tab{padding:10px 14px;font-size:13px}}
+    /* Glossary styles */
+    .glossary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:12px}
+    .gloss-item{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04)}
+    .gloss-item h4{margin:0 0 6px 0;color:var(--accent);font-size:1rem}
+    .gloss-item p{margin:0;color:var(--muted);font-size:0.95rem;line-height:1.4}
+    @media (max-width:700px){.glossary-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -97,6 +104,7 @@
       <div class="tab" data-tab="processamento">Processamento</div>
       <div class="tab" data-tab="validacao">Validação & Resultados</div>
       <div class="tab" data-tab="recursos">Recursos</div>
+      <div class="tab" data-tab="glossario">Glossário</div>
     </div>
 
     <div class="content">
@@ -311,6 +319,117 @@
             </ul>
           </section>
 
+          <section id="glossario" class="panel" style="display:none">
+            <h2>Glossário</h2>
+            <p>Termos e definições usados na apresentação HydroColor.</p>
+            <div class="glossary-grid">
+              <div class="gloss-item">
+                <h4>Rrs (Reflectance, remote sensing)</h4>
+                <p>Reflectância remota acima da superfície da água; definida como <strong>Rrs = Lw / Ed</strong>, onde <em>Lw</em> é a radiância emergente e <em>Ed</em> a irradiância descendente.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Lw (Radiância da água)</h4>
+                <p>Radiância emergente medida acima da superfície da água; contribuição direta para o cálculo de Rrs.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Ed (Irradiância descendente)</h4>
+                <p>Fluxo de radiação incidente por unidade de área proveniente do céu que ilumina a superfície da água.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Ls / Lt (Radiância do céu / Radiância total)</h4>
+                <p><em>Ls</em> é a radiância do céu; <em>Lt</em> é a radiância total medida incluindo superfície e céu.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>SPM (Suspended Particulate Matter)</h4>
+                <p>Material particulado em suspensão, frequentemente expresso em mg/L ou g/m³; está relacionado à turbidez.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Turbidez (NTU)</h4>
+                <p>Medida óptica da turvação da água; NTU (Nephelometric Turbidity Units) é a unidade mais comum.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Calibração</h4>
+                <p>Procedimentos para ajustar leituras da câmera usando referências (ex.: cartão 18%) para remover viés de iluminação e padronizar medições.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Saturação</h4>
+                <p>Estado em que o sensor atinge seu limite superior de registro, tornando as leituras inválidas para análise radiométrica.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Cross-talk espectral</h4>
+                <p>Sobreposição das bandas R, G e B em sensores de câmera, que causa mistura espectral entre canais e limita resolução espectral.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>RMSE (Root Mean Square Error)</h4>
+                <p>Métrica de erro usada em validação para quantificar diferenças entre séries de medições (ex.: HydroColor vs radiômetro).</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Bias</h4>
+                <p>Desvio sistemático entre duas séries de medições; diferença média entre estimativas e valores de referência.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Metadata</h4>
+                <p>Informações associadas às imagens (GPS, data/hora, ângulos, exposição) essenciais para reprodutibilidade e análise.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Reflectância (albedo local)</h4>
+                <p>Frações da luz incidente refletida pela superfície; em águas, a reflectância espectral indica constituintes opticamente ativos.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Radiância</h4>
+                <p>Quantidade de luz que chega ao sensor por unidade de área e ângulo sólido; tipicamente medida em W·sr⁻¹·m⁻²·nm⁻¹.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Unidades e exemplos</h4>
+                <p>Exemplos típicos: concentração de SPM em <strong>mg·L⁻¹</strong>, turbidez em <strong>NTU</strong>, radiância em <strong>W·sr⁻¹·m⁻²·nm⁻¹</strong>. Incluir unidades facilita comparação entre métodos.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>IOPs / AOPs</h4>
+                <p><strong>IOPs</strong> (Inherent Optical Properties) são propriedades do meio (absorção, espalhamento) independentes da iluminação; <strong>AOPs</strong> (Apparent Optical Properties) dependem da iluminação e geometria (ex.: reflectância).</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Coeficiente de atenuação</h4>
+                <p>Coeficiente de atenuação vertical (<em>Kd</em>) descreve a perda de irradiância com profundidade; unidades típicas: m⁻¹.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Constituintes: clorofila-a, CDOM, sedimentos</h4>
+                <p>Principais constituintes opticamente ativos: <strong>clorofila-a</strong> (biomassa fitoplanctônica), <strong>CDOM</strong> (dissolved organic matter) e sólidos em suspensão (sedimentos).</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Protocolos / metodologia</h4>
+                <p>Boas práticas: registrar metadata completa, usar cartão de referência (18%) para calibração de exposição, evitar áreas saturadas e anotar condições de iluminação/ângulos.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Notação e símbolos</h4>
+                <p>Use notação espectral explícita, por ex. <strong>Rrs(λ)</strong> ou <strong>Lw(λ)</strong>, para indicar dependência em comprimento de onda.</p>
+              </div>
+
+              <div class="gloss-item">
+                <h4>Referências rápidas</h4>
+                <p>Sugestões para leitura: Mobley (1994) sobre óptica da água; Lee et al. (2002) para algoritmos de reflectância; artigos do método HydroColor para protocolos práticos.</p>
+              </div>
+            </div>
+          </section>
+
         </main>
 
         
@@ -331,12 +450,17 @@
       document.getElementById(id).style.display='block';
       window.location.hash=id;
     }));
-    // open tab from hash
-    const hash=window.location.hash.replace('#','');
-    if(hash){
-      const tb=document.querySelector(`.tab[data-tab="${hash}"]`);
-      if(tb) tb.click();
-    }
+    // open tab from query param or hash
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      const hash = window.location.hash.replace('#','');
+      const target = tabParam || hash;
+      if(target){
+        const tb=document.querySelector(`.tab[data-tab="${target}"]`);
+        if(tb) tb.click();
+      }
+    })();
   </script>
   
   <!-- Modal gallery -->

@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HydroColor — Apresentação Completa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <style>
+    :root{--bg:#003f63;--card:#071827;--muted:#9aa6b2;--accent:#ff7a59;--glass: rgba(255,255,255,0.04)}
+    :root.light{--bg:#f7fafc;--card:#ffffff;--muted:#0b1723;--accent:#0b76ff;--glass: rgba(2,6,23,0.03)}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;margin:0;background:linear-gradient(180deg,var(--bg) 0%, #00658f 100%);color:var(--muted);transition:background .18s,color .18s}
+    .wrap{max-width:980px;width:min(980px,96%);margin:24px auto;padding:clamp(12px,2vw,24px)}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{width:64px;height:64px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#ff9b7a);display:flex;align-items:center;justify-content:center;font-weight:700;color:#031022}
+    h1{margin:0;font-size:clamp(1.2rem,2.4vw,1.8rem)}
+    p.lead{color:var(--muted);margin-top:6px}
+    .tabs{display:flex;gap:10px;margin-top:24px;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
+    .tab{background:transparent;padding:12px 16px;border-radius:10px;cursor:pointer;color:var(--muted);font-weight:500;transition:all .22s ease;border:1px solid transparent}
+    .tab:hover{background:rgba(255,255,255,0.06);color:var(--accent)}
+    .tab.active{background:var(--accent);color:#fff;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+    .content{margin-top:20px;background:var(--card);padding:22px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.35)}
+    .panel{min-height:0}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+    .card{background:var(--card);padding:14px;border-radius:10px;color:var(--muted);box-shadow:0 6px 18px rgba(2,6,23,0.4)}
+    h2{margin:0 0 8px 0;font-size:clamp(1rem,2.0vw,1.4rem)}
+    ul{color:var(--muted)}
+    .btn{display:inline-block;padding:10px 14px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600}
+    .diagram{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px}
+    .gallery-img{cursor:pointer;transition:transform .15s ease}
+    .gallery-img:hover{transform:scale(1.02)}
+    /* Modal gallery */
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.88);display:flex;align-items:center;justify-content:center;padding:24px;z-index:999;visibility:hidden;opacity:0;transition:opacity .18s,visibility .18s}
+    :root.light .modal{background:rgba(255,255,255,0.9)}
+    .modal.open{visibility:visible;opacity:1}
+    .modal-content{max-width:1100px;width:100%;background:linear-gradient(180deg, #021220, #031827);padding:16px;border-radius:10px;display:flex;flex-direction:column;gap:10px}
+    :root.light .modal-content{background:var(--card);color:var(--muted)}
+    .modal-img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:6px}
+    .modal-caption{color:var(--muted);font-size:14px}
+    .modal-close{position:absolute;top:18px;right:22px;background:transparent;border:0;color:var(--muted);font-size:22px;cursor:pointer}
+    pre{white-space:pre-wrap;color:var(--muted);background:transparent;padding:8px;margin:0}
+    footer{margin-top:18px;color:var(--muted);font-size:.9rem}
+    /* Responsive */
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    img{max-width:100%;height:auto;display:block}
+    h1,h2{color:var(--accent)}
+    p,li{color:var(--muted);line-height:1.45}
+    .acq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+    .acq-item{background:var(--glass);padding:12px;border-radius:10px;text-align:center}
+    .acq-item h4{margin:8px 0 6px 0;color:var(--accent)}
+    @media (max-width:700px){.acq-grid{grid-template-columns:1fr}.tabs{flex-wrap:wrap;gap:6px}.tab{padding:10px 14px;font-size:13px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">HC</div>
+      <div>
+        <h1>HydroColor — Guia completo (baseado em Leeuw & Boss, 2018)</h1>
+        <p class="lead">Apresentação interativa e didática sobre método, aquisição, análise e validação de Rrs e turbidez por smartphone.</p>
+      </div>
+    </header>
+    <div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;margin-top:8px">
+      <label style="color:var(--muted);font-size:14px">Tema</label>
+      <button id="themeToggle" class="tab" style="padding:6px 10px">Modo claro/escuro</button>
+    </div>
+
+    <!-- Quick Links (moved from right sidebar) -->
+    <div class="card" style="margin-top:14px;">
+      <h3 style="margin-top:0">Quick Links</h3>
+      <p style="margin:6px 0"><a class="btn" href="metodologia_hydrocolor_abnt.md" style="background:#0b6b3b">Metodologia (ABNT)</a></p>
+      <p style="margin:6px 0;color:var(--muted)">Cartões disponíveis: preto, cinza (18%) e branco — use o cinza 18% como referência para calibração; preto e branco para avaliar faixa dinâmica.</p>
+      <h4 style="margin-top:12px">Diagrama: aquisição</h4>
+      <div class="acq-grid" style="margin-top:8px">
+        <div class="acq-item">
+          <h4>1. Cartão 18% (referência)</h4>
+          <p style="color:var(--muted);font-size:13px">Superfície de reflectância conhecida usada para calibrar a iluminação ambiente (Ed) e normalizar exposições; evita viés por variação de luz.</p>
+        </div>
+        <div class="acq-item">
+          <h4>2. Céu (brilho)</h4>
+          <p style="color:var(--muted);font-size:13px">Imagem do céu utilizada para estimar reflexão da superfície e contribuição do brilho, que deve ser subtraída de Lw para obter Rrs correta.</p>
+        </div>
+        <div class="acq-item">
+          <h4>3. Água (Lw)</h4>
+          <p style="color:var(--muted);font-size:13px">Imagem da água com a radiância emergente Lw; após correções por cartão e céu, calcula-se Rrs = Lw / Ed para cada banda RGB.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Seções">
+      <div class="tab active" data-tab="intro">Introdução</div>
+      <div class="tab" data-tab="teoria">Teoria & Reflectância</div>
+      <div class="tab" data-tab="campo">Protocolo de Campo</div>
+      <div class="tab" data-tab="processamento">Processamento</div>
+      <div class="tab" data-tab="validacao">Validação & Resultados</div>
+      <div class="tab" data-tab="recursos">Recursos</div>
+    </div>
+
+    <div class="content">
+      <div class="grid">
+        <main>
+
+          <section id="intro" class="panel">
+            <h2>O que é HydroColor?</h2>
+            <p>HydroColor é um aplicativo móvel que transforma a câmera do smartphone em um fotômetro de três bandas (RGB). Com a coleta padronizada de imagens (cartão cinza 18%, céu e água) o sistema estima a refletância de sensoriamento remoto acima da água (Rrs) e parâmetros derivados, como turbidez e SPM.</p>
+
+            <h3>Por que usar HydroColor?</h3>
+            <ul>
+              <li>Baixo custo e acessibilidade para ciência cidadã e monitoramento.</li>
+              <li>Compatibilidade com medidas remotas de satélite (comparabilidade).</li>
+              <li>Exportação de dados com metadados completos (GPS, ângulos, exposição).</li>
+            </ul>
+
+            <h3>Limitações e boas práticas</h3>
+            <p>HydroColor oferece uma solução prática, porém sujeito a limitações: variabilidade entre modelos de câmeras, efeitos de saturação e influência do ângulo solar. Para obter resultados reutilizáveis, adote protocolos padronizados, registre metadados completos e realize calibrações locais sempre que possível.</p>
+
+            <p style="color:var(--muted)">Dica: colete pelo menos 3 replicatas por ponto e anote condições ambientais (vento, nuvens, presença de espuma).</p>
+
+            <div class="card diagram">
+              <h4>Fluxo de trabalho</h4>
+              <ol>
+                <li>Preparar local e equipamento (cartão 18%, calibrador, registrar condições).</li>
+                <li>Capturar imagem do cartão cinza, do céu e da água seguindo orientação do app.</li>
+                <li>Processamento no app: normalização RGB pela exposição e pelo cartão, correção por reflexão do céu, cálculo de Rrs.</li>
+                <li>Exportar arquivo .txt com metadados e valores para análise e validação.</li>
+              </ol>
+            </div>
+          </section>
+
+          <section id="teoria" class="panel" style="display:none">
+            <h2>Teoria: o que é Reflectância (Rrs)?</h2>
+            <p>Reflectância de sensoriamento remoto acima da superfície, <em>Rrs(λ)</em>, é a razão entre a radiância que emerge da água (<em>Lw(λ)</em>) e a irradiância descendente (<em>Ed(λ)</em>) em um comprimento de onda específico. Em termos práticos:</p>
+            <div style="margin:6px 0 10px 0;color:var(--muted)">$$R_{rs}(\lambda)=\dfrac{L_w(\lambda)}{E_d(\lambda)}$$</div>
+
+            <p>Intuitivamente, <strong>Rrs</strong> indica a fração da energia incidente que, após passagem pela coluna d'água e interações ópticas (absorção e espalhamento), retorna ao sensor. É a variável central para inferir propriedades da água, como concentração de sólidos em suspensão (SPM), turbidez e conteúdo de fitoplâncton.</p>
+
+            <h3>Elementos físicos e sua influência</h3>
+            <ul>
+              <li><strong>Absorção</strong>: moléculas como CDOM e pigmentos fitoplanctônicos removem luz em comprimentos de onda específicos, reduzindo Rrs nas bandas onde absorvem.</li>
+              <li><strong>Espalhamento</strong>: partículas inorgânicas e SPM desviam luz, aumentando Rrs; bandas mais longas (vermelho) costumam ser mais sensíveis a partículas grandes.</li>
+              <li><strong>Superfície</strong>: brilho especular (glint) do céu pode contaminar Lw; por isso são capturadas imagens do céu para estimar e subtrair essa contribuição.</li>
+            </ul>
+
+            <h3>Por que medir Rrs com smartphone?</h3>
+            <p>Aplicativos como o HydroColor usam canais RGB das câmeras como bandas amplas. Apesar da menor resolução espectral e da sobreposição entre canais, medidas padronizadas (cartão 18%, exposição controlada, foto do céu) permitem estimativas robustas e comparáveis em séries temporais e validação com sensores de referência.</p>
+
+            <h3>Exemplos práticos</h3>
+            <ul>
+              <li>Em águas costeiras turvas, Rrs_red aumenta com a concentração de SPM — útil para mapas rápidos de turbidez.</li>
+              <li>Águas com alta concentração de fitoplâncton apresentam redução relativa em Rrs_green devido à absorção por clorofila.</li>
+            </ul>
+
+            <p style="color:var(--muted)">Nota: a interpretação quantitativa exige calibração local e correções radiométricas; use replicatas e métricas estatísticas (RMSE, bias) ao comparar com instrumentos de referência.</p>
+
+            <h3>Diagrama explicativo</h3>
+            <div style="padding:0;border-radius:8px">
+              <figure style="margin:0">
+                <img class="gallery-img" src="./assets/img/Example-of-three-images-collected-with-HydroColor-and-the-optical-features-captured-in_W640.jpg" alt="Sequência: cartão, céu e água" style="width:100%;border-radius:8px;" data-caption="Sequência de imagens coletadas com HydroColor: cartão 18% (referência), céu (estimativa de brilho), e água (Lw). Use esta imagem para visualizar Ed (luz incidente), Lw (água-emergente) e o sensor; absorção ↑ reduz Rrs, espalhamento ↑ aumenta Rrs." loading="lazy">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Sequência de imagens: cartão 18% (referência), céu (estimativa de brilho) e água (Lw). A imagem ilustra Ed (luz incidente), Lw (radiância emergente) e a posição do sensor; absorção ↑ → Rrs ↓, espalhamento ↑ → Rrs ↑.</figcaption>
+              </figure>
+            </div>
+
+            <p style="margin-top:8px;color:var(--muted)">Nota: HydroColor usa os canais RGB da câmera como bandas largas que correlacionam com respostas espectrais tradicionais.</p>
+            
+            <h3>Figuras do artigo (exemplos)</h3>
+            <p>As figuras abaixo são extraídas do artigo de referência e ilustram a sensibilidade espectral das câmeras, a resposta do sensor e a relação entre Rrs e turbidez.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">
+              <figure style="margin:0">
+                <img class="gallery-img" loading="lazy" data-src="./assets/img/Spectral-sensitivity-curves-for-a-variety-of-smartphone-cameras-The-red-green-and-blue_W640.jpg" src="./assets/img/Spectral-sensitivity-curves-for-a-variety-of-smartphone-cameras-The-red-green-and-blue_W640.jpg" alt="Sensibilidade espectral" style="width:100%;border-radius:8px;" data-caption="Este gráfico mostra as curvas de sensibilidade espectral típicas de sensores de smartphone. Observe a sobreposição entre as bandas R, G e B; essa sobreposição introduz 'cross-talk' espectral que limita a resolução espectral das medidas e exige cuidados na interpretação de variações de Rrs. (Fonte: Leeuw & Boss, 2018)">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Este gráfico mostra as curvas de sensibilidade espectral típicas de sensores de smartphone. Observe a sobreposição entre as bandas R, G e B; essa sobreposição introduz 'cross-talk' espectral que limita a resolução espectral das medidas e exige cuidados na interpretação de variações de Rrs. (Fonte: Leeuw &amp; Boss, 2018)</figcaption>
+              </figure>
+              <figure style="margin:0">
+                <img class="gallery-img" loading="lazy" data-src="./assets/img/Camera-response-as-a-function-of-radiance-Measurements-were-made-by-gradually_W640.jpg" src="./assets/img/Camera-response-as-a-function-of-radiance-Measurements-were-made-by-gradually_W640.jpg" alt="Resposta do sensor" style="width:100%;border-radius:8px;" data-caption="Medição da resposta do sensor em função da radiância: mostra a faixa linear útil onde a câmera atua como fotômetro. Nas regiões não-lineares (saturação) as leituras tornam-se inválidas para cálculos radiométricos. Garantir exposição adequada é crítico.">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Medição da resposta do sensor em função da radiância: mostra a faixa linear útil onde a câmera atua como fotômetro. Nas regiões não-lineares (saturação) as leituras tornam-se inválidas para cálculos radiométricos. Garantir exposição adequada é crítico.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section id="campo" class="panel" style="display:none">
+            <h2>Protocolo de campo detalhado</h2>
+            <h3>Itens essenciais</h3>
+            <ul>
+              <li>Cartão cinza fotográfico 18% (laminado, plano).</li>
+              <li>Smartphone com bateria carregada e espaço disponível.</li>
+              <li>Instrumentos de referência para validação (radiômetro, turbidímetro).</li>
+              <li>Registro de condições (vento, ondas, cobertura de nuvens).</li>
+            </ul>
+
+            <h3>Passo a passo</h3>
+            <ol>
+              <li>Posicione-se de forma estável à beira da água; evitar sombras sobre o cartão e sobre a área de medição.</li>
+              <li>Abra o HydroColor e siga a orientação visual para alinhar o cartão, o céu e o quadro de água (ângulos zênite/azimute são mostrados).</li>
+              <li>Tire a foto do cartão 18% (para calibrar iluminação do dia).</li>
+              <li>Tire a foto do céu na direção indicada pelo app para estimar contribuição de brilho de superfície.</li>
+              <li>Tire a foto da água num ponto homogêneo próximo ao observador; evite espuma e reflexos diretos.</li>
+              <li>Repita a sequência (mínimo 3 replicatas) para reduzir variabilidade.</li>
+            </ol>
+
+            <h3>Checklist rápido</h3>
+            <ul>
+              <li>Cartão limpo e plano? ✓</li>
+              <li>Exposição automática fixa ou consistente? ✓</li>
+              <li>Fotos do céu sem obstruções (não apontar diretamente para o sol)? ✓</li>
+              <li>Replicatas coletadas e metadados registrados? ✓</li>
+            </ul>
+
+            <h3>Dicas práticas</h3>
+            <ul>
+              <li>Preferir horas centrais do dia com céu claro para reduzir incertezas.</li>
+              <li>Evitar amostras durante mar agitado ou vento forte.</li>
+              <li>Treinar equipe para posicionamento consistente do cartão e do sensor.</li>
+            </ul>
+          </section>
+
+          <section id="processamento" class="panel" style="display:none">
+            <h2>Processamento e cálculo</h2>
+            <h3>Normalização e calibração</h3>
+            <p>O app normaliza os valores dos pixels RGB pela exposição e calibra a iluminação usando o cartão cinza. Em seguida, subtrai a contribuição do céu (estimada a partir da foto do céu) para isolar a radiância emitida pela água.</p>
+
+            <h3>Dados exportados</h3>
+            <p>O arquivo exportado contém: identificador, data/hora UTC, latitude/longitude, ângulos solares, rumo e inclinação do aparelho, exposição, valores RGB normalizados, Rrs por banda e estimativa de turbidez.</p>
+
+            <h3>Formato e inspeção rápida</h3>
+            <p>O arquivo exportado geralmente é um arquivo texto/tabulado (.txt ou .csv). Verifique o cabeçalho para confirmar colunas: ID, timestamp, lat, lon, Rrs_R, Rrs_G, Rrs_B, turbidez_estimada, etc. Console/planilha rápida ajudam a identificar outliers e imagens saturadas.</p>
+
+            <h3>Equações simplificadas</h3>
+            <div class="math" style="margin:0 0 8px 0">
+              <div style="font-size:1.05rem;color:var(--muted)">$$R_{rs} = \frac{L_t - \rho L_s}{\frac{\pi}{R_{ref}} L_c}$$</div>
+              <div style="margin-top:8px;color:var(--muted)">Versão prática usada em muitos fluxos de trabalho: $$R_{rs} = \frac{L_w}{E_d}$$</div>
+              <div style="margin-top:8px;color:var(--muted);font-size:0.95rem">Estimativa de turbidez (exemplo empírico): NTU &asymp; a · Rrs_red + b (parâmetros calibrados localmente)</div>
+            </div>
+            <p style="color:var(--muted)">Onde parâmetros empíricos (a,b) são derivados da calibração com turbidímetro.</p>
+          </section>
+
+          <section id="validacao" class="panel" style="display:none">
+            <h2>Validação e desempenho</h2>
+            <p>Leeuw &amp; Boss (2018) compararam HydroColor com radiômetros e turbidímetros comerciais mostrando:</p>
+            <ul>
+              <li>Erro médio em Rrs ~ 26% (precisão frente a radiômetros).</li>
+              <li>Erro médio em turbidez ~ 24% frente a turbidímetros portáteis.</li>
+            </ul>
+            <p>Essas incertezas dependem fortemente de condições de campo e proficiência do operador. Em condições ótimas (meio-dia, céu claro, operador treinado) o erro tende a diminuir.</p>
+
+            <h3>Métricas recomendadas</h3>
+            <ul>
+              <li><strong>RMSE</strong> — erro quadrático médio para avaliar magnitude do desvio.</li>
+              <li><strong>Bias</strong> — tendência sistemática entre métodos.</li>
+              <li><strong>R²</strong> — força da correlação entre HydroColor e referência.</li>
+            </ul>
+
+            <p>Ao validar, plote scatter plots (linha 1:1), resíduos e boxplots por faixa de turbidez para entender padrões de erro e condições onde o método falha.</p>
+
+            <h3>Recomendações para análise</h3>
+            <ul>
+              <li>Calibrar empiricamente as relações Rrs → NTU para a região/condições locais.</li>
+              <li>Analisar replicatas e excluir medições com evidências de erro (ondas, reflexos).</li>
+              <li>Usar métricas estatísticas (RMSE, bias, coeficiente de correlação) para comparar com instrumentos de referência.</li>
+            </ul>
+            
+            <h3>Figuras de validação (artigo)</h3>
+            <p>As imagens abaixo mostram comparações entre HydroColor e instrumentos de referência e a relação empírica entre Rrs (canal vermelho) e turbidez.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">
+              <figure style="margin:0">
+                <img class="gallery-img" data-src="./assets/img/Comparison-of-HydroColor-Rrs-with-WISP-Rrs-The-three-plots-show-the-Rrs-comparison-for_W640.jpg" src="./assets/img/Comparison-of-HydroColor-Rrs-with-WISP-Rrs-The-three-plots-show-the-Rrs-comparison-for_W640.jpg" alt="Comparison Rrs" style="width:100%;border-radius:8px;" data-caption="Comparação direta de Rrs medidas pelo HydroColor e por um radiômetro de referência (WISP). Os pontos próximos à diagonal indicam boa concordância; dispersões mostram limitações em certas condições espectrais e angulações.">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Comparação direta de Rrs medidas pelo HydroColor e por um radiômetro de referência (WISP). Os pontos próximos à diagonal indicam boa concordância; dispersões mostram limitações em certas condições espectrais e angulações.</figcaption>
+              </figure>
+              <figure style="margin:0">
+                <img class="gallery-img" data-src="./assets/img/Relationship-between-turbidity-and-HydroColor-RrsRed-The-plot-on-the-right-is-a-closer_W640.jpg" src="./assets/img/Relationship-between-turbidity-and-HydroColor-RrsRed-The-plot-on-the-right-is-a-closer_W640.jpg" alt="Rrs vs turbidez" style="width:100%;border-radius:8px;" data-caption="Relação empírica entre Rrs no canal vermelho e turbidez (NTU). Esta curva empírica é utilizada pelo aplicativo para converter valores de Rrs em estimativas de turbidez; a dispersão indica incerteza e necessidade de calibração local.">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Relação empírica entre Rrs no canal vermelho e turbidez (NTU). Esta curva empírica é utilizada pelo aplicativo para converter valores de Rrs em estimativas de turbidez; a dispersão indica incerteza e necessidade de calibração local.</figcaption>
+              </figure>
+              <figure style="margin:0">
+                <img class="gallery-img" data-src="./assets/img/Comparison-of-HydroColor-and-WISP-measurements-of-Ed-Ls-and-Lt-This-figure-shows-data_W640.jpg" src="./assets/img/Comparison-of-HydroColor-and-WISP-measurements-of-Ed-Ls-and-Lt-This-figure-shows-data_W640.jpg" alt="Comparison Ed Ls Lt" style="width:100%;border-radius:8px;" data-caption="Comparação entre medições de irradiância descendente (Ed), radiância do céu (Ls) e radiância total (Lt) obtidas pelo HydroColor e por instrumentos de referência. Demonstra a capacidade do método em reproduzir medidas radiométricas essenciais.">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Comparação entre medições de irradiância descendente (Ed), radiância do céu (Ls) e radiância total (Lt) obtidas pelo HydroColor e por instrumentos de referência. Demonstra a capacidade do método em reproduzir medidas radiométricas essenciais.</figcaption>
+              </figure>
+              <figure style="margin:0">
+                <img class="gallery-img" data-src="./assets/img/Comparison-of-the-measured-reflectance-and-turbidity-from-several-smartphones-at-the-same_W640.jpg" src="./assets/img/Comparison-of-the-measured-reflectance-and-turbidity-from-several-smartphones-at-the-same_W640.jpg" alt="Comparison phones" style="width:100%;border-radius:8px;" data-caption="Comparação entre diferentes modelos de smartphones realizando a mesma medição. A figura evidencia variabilidade inter-sensor que deve ser considerada: calibrar ou agrupar por modelo reduz viés.">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Comparação entre diferentes modelos de smartphones realizando a mesma medição. A figura evidencia variabilidade inter-sensor que deve ser considerada: calibrar ou agrupar por modelo reduz viés.</figcaption>
+              </figure>
+              <figure style="margin:0">
+                <img class="gallery-img" data-src="./assets/img/Comparison-of-volunteer-collected-HydroColor-measurements-and-SPM-in-San-Francisco-Bay_W640.jpg" src="./assets/img/Comparison-of-volunteer-collected-HydroColor-measurements-and-SPM-in-San-Francisco-Bay_W640.jpg" alt="Volunteer data" style="width:100%;border-radius:8px;" data-caption="Comparação entre medições coletadas por voluntários com HydroColor e concentrações de SPM (g/m³) em San Francisco Bay. Mostra potencial para ciência cidadã, mas indica necessidade de treinamento e controle de qualidade.">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Comparação entre medições coletadas por voluntários com HydroColor e concentrações de SPM (g/m³) em San Francisco Bay. Mostra potencial para ciência cidadã, mas indica necessidade de treinamento e controle de qualidade.</figcaption>
+              </figure>
+              <figure style="margin:0">
+                <img class="gallery-img" data-src="./assets/img/Example-of-three-images-collected-with-HydroColor-and-the-optical-features-captured-in_W640.jpg" src="./assets/img/Example-of-three-images-collected-with-HydroColor-and-the-optical-features-captured-in_W640.jpg" alt="Example images" style="width:100%;border-radius:8px;" data-caption="Exemplo típico de sequência de três imagens: cartão 18% (para calibrar iluminação), imagem do céu (para estimar brilho de superfície) e imagem da água (para extrair Lw). Entender cada quadro é essencial para interpretar Rrs corretamente.">
+                <figcaption style="color:var(--muted);font-size:13px;margin-top:6px">Exemplo típico de sequência de três imagens: cartão 18% (para calibrar iluminação), imagem do céu (para estimar brilho de superfície) e imagem da água (para extrair Lw). Entender cada quadro é essencial para interpretar Rrs corretamente.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section id="recursos" class="panel" style="display:none">
+            <h2>Recursos e referências</h2>
+            <p>Artigo-base: Leeuw, T.; Boss, E. (2018). The HydroColor App: Above Water Measurements of Remote Sensing Reflectance and Turbidity Using a Smartphone Camera. Sensors, 18, 256.</p>
+            <p>Download do app (Android): <a class="btn" href="https://play.google.com/store/apps/details?id=com.h2optics.hydrocolor&hl=pt" target="_blank">HydroColor na Play Store</a></p>
+            <p>Apresentação de referência do projeto de mestrado: <a class="btn" href="https://caetanoronan.github.io/projeto-mestrado-marinho/Apresentacao_Macrofitas_Publica.html" target="_blank">Macrofitas — Projeto de Mestrado</a></p>
+
+            <h3>Arquivos do artigo (texto e PDFs)</h3>
+            <p>Texto completo salvo em: <a href="hydrocolor_article_full.txt">hydrocolor_article_full.txt</a></p>
+            <p>Artigo adicional de calibração/validação (PDF): <a href="Calibration and validation of the HydroColor and Citclops.pdf">Calibration and validation of the HydroColor and Citclops.pdf</a></p>
+
+            <h3>Organização de assets e deploy</h3>
+            <p>Coloque imagens e recursos em <strong>./assets/img/</strong> e referências relativas no HTML (já atualizadas nesta página). Para publicar no GitHub Pages, mova este arquivo para `index.html` na branch `gh-pages` ou na raiz do repositório e confirme que os caminhos relativos apontam para a pasta `assets`.</p>
+
+            <h3>Exemplos de uso</h3>
+            <ul>
+              <li>Monitoramento costeiro de turbidez após eventos de chuva.</li>
+              <li>Campanhas de ciência cidadã para mapeamento de SPM.</li>
+              <li>Validação de produtos de sensoriamento remoto por satélite.</li>
+            </ul>
+          </section>
+
+        </main>
+
+        
+
+      </div>
+
+      <footer></footer>
+    </div>
+  </div>
+
+  <script>
+    const tabs=document.querySelectorAll('.tab');
+    tabs.forEach(t=>t.addEventListener('click', ()=>{
+      tabs.forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      const id=t.dataset.tab;
+      document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
+      document.getElementById(id).style.display='block';
+      window.location.hash=id;
+    }));
+    // open tab from hash
+    const hash=window.location.hash.replace('#','');
+    if(hash){
+      const tb=document.querySelector(`.tab[data-tab="${hash}"]`);
+      if(tb) tb.click();
+    }
+  </script>
+  
+  <!-- Modal gallery -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Fechar">✕</button>
+    <div class="modal-content">
+      <img id="modalImg" class="modal-img" src="" alt="Imagem ampliada">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+
+  <script>
+    // Gallery modal
+    const modal=document.getElementById('modal');
+    const modalImg=document.getElementById('modalImg');
+    const modalCaption=document.getElementById('modalCaption');
+    const modalClose=document.getElementById('modalClose');
+    document.querySelectorAll('.gallery-img').forEach(img=>{
+      img.addEventListener('click', ()=>{
+        const src=img.getAttribute('data-src')||img.src;
+        const cap=img.getAttribute('data-caption')||img.alt||'';
+        modalImg.src=src;
+        modalCaption.textContent=cap;
+        modal.classList.add('open');
+        document.body.style.overflow='hidden';
+      });
+    });
+    modalClose.addEventListener('click', ()=>{ modal.classList.remove('open'); document.body.style.overflow='auto'; });
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) { modal.classList.remove('open'); document.body.style.overflow='auto'; } });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') { modal.classList.remove('open'); document.body.style.overflow='auto'; } });
+  </script>
+  <script>
+    // Theme toggle (light/dark) with persistence
+    const themeToggleBtn = document.getElementById('themeToggle');
+    function applyTheme(t){
+      if(t==='light') document.documentElement.classList.add('light');
+      else document.documentElement.classList.remove('light');
+    }
+    const savedTheme = localStorage.getItem('hc_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    applyTheme(savedTheme);
+    if(themeToggleBtn){
+      themeToggleBtn.textContent = document.documentElement.classList.contains('light') ? 'Modo escuro' : 'Modo claro';
+      themeToggleBtn.addEventListener('click', ()=>{
+        const now = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+        const next = now === 'light' ? 'dark' : 'light';
+        applyTheme(next);
+        localStorage.setItem('hc_theme', next);
+        themeToggleBtn.textContent = next === 'light' ? 'Modo escuro' : 'Modo claro';
+      });
+    }
+  </script>
+  <script>
+    // KaTeX auto-render after DOM ready
+    document.addEventListener('DOMContentLoaded', function(){
+      if(typeof renderMathInElement === 'function'){
+        renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});
+      }
+    });
+  </script>
+</body>
+</html>

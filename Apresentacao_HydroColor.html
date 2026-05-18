@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HydroColor — Apresentação</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:2rem;color:#222;background:#fff}
+    header{border-bottom:1px solid #eee;padding-bottom:1rem;margin-bottom:1rem}
+    h1{font-size:1.6rem}
+    .badge{display:inline-block;padding:.2rem .5rem;background:#0b5cff;color:#fff;border-radius:6px}
+    section{margin:1.2rem 0}
+    a.btn{display:inline-block;padding:.5rem .8rem;background:#0b5cff;color:#fff;border-radius:6px;text-decoration:none}
+    footer{margin-top:2rem;border-top:1px solid #eee;padding-top:1rem;color:#666;font-size:.9rem}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HydroColor — Aplicativo para medições ópticas acima da água</h1>
+    <div>Projeto de apoio &middot; Apresentação clone atualizada</div>
+  </header>
+
+  <section>
+    <h2>Resumo</h2>
+    <p>HydroColor é um aplicativo móvel que utiliza a câmera do smartphone como um fotômetro de três bandas (RGB) para medir a refletância de sensoriamento remoto (Rrs) acima da superfície da água. A partir de uma sequência padronizada de imagens — cartão cinza 18%, céu e água — o app calcula Rrs nas bandas vermelha, verde e azul e estima parâmetros ópticos como turbidez (NTU) e concentração de material particulado em suspensão (SPM).</p>
+  </section>
+
+  <section>
+    <h2>Como funciona</h2>
+    <ul>
+      <li>O usuário registra três imagens: cartão cinza (referência), céu e água.</li>
+      <li>O app utiliza GPS, bússola e giroscópio do aparelho para orientar o ângulo de aquisição e registrar metadados (latitude, longitude, hora, ângulos).</li>
+      <li>Os valores RGB são normalizados pela exposição e calibrados pelo cartão cinza; a contribuição do céu é subtraída para obter Rrs.</li>
+      <li>A partir de Rrs, o app aplica relações empíricas para estimar turbidez e outros parâmetros ópticos.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Precisão e validação</h2>
+    <p>O método foi validado por Leeuw &amp; Boss (2018). Resultados indicam que o HydroColor pode medir Rrs com erro médio em torno de 26% e turbidez com erro médio em torno de 24% em relação a instrumentos comerciais (radiômetros e turbidímetros), com desempenho melhor em condições ótimas (céu claro, meio-dia, operador treinado).</p>
+  </section>
+
+  <section>
+    <h2>Vantagens e limitações</h2>
+    <p><strong>Vantagens:</strong> baixo custo, escalabilidade para ciência cidadã, exportação de dados com metadados completos.</p>
+    <p><strong>Limitações:</strong> sensibilidade a condições de iluminação, necessidade de cartão cinza de 18%, possibilidade de erro com operador não treinado ou mar agitado.</p>
+  </section>
+
+  <section>
+    <h2>Material de referência</h2>
+    <ul>
+      <li>Leeuw, T.; Boss, E. The HydroColor App: Above Water Measurements of Remote Sensing Reflectance and Turbidity Using a Smartphone Camera. Sensors, 2018.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>App de campo</h2>
+    <p>Instale o HydroColor no Android (Play Store): <a href="https://play.google.com/store/apps/details?id=com.h2optics.hydrocolor&hl=pt" target="_blank" class="btn">Abrir HydroColor na Play Store</a></p>
+  </section>
+
+  <section>
+    <h2>Link para projeto de referência</h2>
+    <p>Apresentação de referência do projeto de mestrado: <a href="https://caetanoronan.github.io/projeto-mestrado-marinho/Apresentacao_Macrofitas_Publica.html" target="_blank">Distribuição e Modelagem de Habitat de Macrófitas Marinhas</a></p>
+  </section>
+
+  <footer>
+    <div>Gerado automaticamente — clone e adaptação da apresentação de drones para fins de documentação.</div>
+    <div>Para alterações adicionais (estilo, tradução, export PDF), solicite os ajustes.</div>
+  </footer>
+</body>
+</html>
